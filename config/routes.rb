@@ -11,9 +11,12 @@ SampleApp::Application.routes.draw do
   
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+
+  #scope :constraints => { :protocol => "https" } do 
+      match '/signup',  :to => 'users#new'
+      match '/signin',  :to => 'sessions#new'
+  #end
   
-  match '/signup',  :to => 'users#new'
-  match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
