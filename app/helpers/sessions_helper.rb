@@ -32,7 +32,6 @@ module SessionsHelper
   end
   
   def redirect_back_or(default)
-    puts "session[:return_to] = #{session[:return_to]}"
     redirect_to(session[:return_to] || default)
     clear_return_to
   end
@@ -48,7 +47,6 @@ module SessionsHelper
     end
     
     def store_location
-      puts "request.fullpath = #{request.fullpath}"
       session[:return_to] = request.fullpath
     end
     

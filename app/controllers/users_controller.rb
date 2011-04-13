@@ -5,9 +5,8 @@ class UsersController < ApplicationController
   before_filter :admin_user,   only: [:destroy]
   
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = 'User destroyed.'
-    redirect_to users_path
+    @user.destroy
+    redirect_to users_path, :flash => { :success => "User destroyed." }
   end
   
   def index
@@ -45,7 +44,6 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @title = "Edit user"
-    puts "session[:return_to] = #{session[:return_to]}"
   end
   
   def update
@@ -71,7 +69,8 @@ class UsersController < ApplicationController
     end
     
     def admin_user
-      redirect_to(root_path) unless current_user.admin?
+      @user = User.find(params[:id])
+      redirect_to(root_path) if !current_user.admin? || current_user?(@user)
     end
 
 end
