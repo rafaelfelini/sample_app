@@ -9,9 +9,15 @@ SampleApp::Application.routes.draw do
   get "pages/about"
   get "pages/help"
   
-  resources :users
-  resources :sessions,    only: [:new, :create, :destroy]
-  resources :microposts,  only: [:create, :destroy]
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
+  resources :sessions,      only: [:new, :create, :destroy]
+  resources :microposts,    only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
   #scope :constraints => { :protocol => "https" } do 
       match '/signup',  :to => 'users#new'
